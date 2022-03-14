@@ -7,7 +7,6 @@ import ru.job4j.articles.model.Word;
 import ru.job4j.articles.service.generator.ArticleGenerator;
 import ru.job4j.articles.store.Store;
 
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class SimpleArticleService implements ArticleService {
