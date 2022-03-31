@@ -37,7 +37,9 @@ public class CinemaTest {
     public void whenNotValidPlace() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
-        Ticket ticket = cinema.validPlace(1, 1);
+        Calendar date = Calendar.getInstance();
+        date.set(2020, 10, 10, 23, 00);
+        Ticket ticket = cinema.buy(account, -1, 1, date);
     }
 
     @Ignore
@@ -46,8 +48,8 @@ public class CinemaTest {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
-        date.set(2020, 10, 10, 23, 00);
-        Ticket ticket = cinema.validDate(date);
+        date.set(2010, 10, 10, 23, 00);
+        Ticket ticket = cinema.buy(account, 1, 1, date);
     }
 
     @Ignore
@@ -57,6 +59,7 @@ public class CinemaTest {
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
         date.set(2020, 10, 10, 23, 00);
-        Ticket ticket = cinema.validPlace(1, 1, date);
+        Ticket ticket = cinema.buy(account, 1, 1, date);
+        Ticket ticket2 = cinema.buy(account, 1, 1, date);
     }
 }
