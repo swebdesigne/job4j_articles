@@ -1,8 +1,12 @@
 package tdd.template;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Map;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class TGeneratorTest {
 
@@ -15,10 +19,21 @@ public class TGeneratorTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whetMapHasExcessKey() {
+    public void whenMapHasExcessKey() {
         TGenerator tGenerator = new TGenerator();
         String template = "I am a ${name}, Who are ${subject}?";
         Map<String, String> keys = Map.of("name", "Петр", "subject", "Арсентьев", "not", "not available");
         tGenerator.produce(template, keys);
+    }
+
+    @Ignore
+    @Test
+    public void whenTemplateHasKeyWhichMapHasToo() {
+        TGenerator tGenerator = new TGenerator();
+        String template = "I am a ${name}, Who are ${subject}?";
+        Map<String, String> keys = Map.of("name", "Petr", "subject", "Arsentev");
+        String result = tGenerator.produce(template, keys);
+        String expected = "I am a Petr Arsentev, Who are you? ";
+        assertThat(result, is(expected));
     }
 }
