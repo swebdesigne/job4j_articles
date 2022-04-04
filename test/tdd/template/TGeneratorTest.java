@@ -26,14 +26,5 @@ public class TGeneratorTest {
         tGenerator.produce(template, keys);
     }
 
-    @Ignore
-    @Test
-    public void whenTemplateHasKeyWhichMapHasToo() {
-        TGenerator tGenerator = new TGenerator();
-        String template = "I am a ${name}, Who are ${subject}?";
-        Map<String, String> keys = Map.of("name", "Petr", "subject", "Arsentev");
-        String result = tGenerator.produce(template, keys);
-        String expected = "I am a Petr Arsentev, Who are you? ";
-        assertThat(result, is(expected));
-    }
+
 }
