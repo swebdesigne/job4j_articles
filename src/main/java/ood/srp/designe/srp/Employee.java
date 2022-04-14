@@ -1,20 +1,12 @@
 package ood.srp.designe.srp;
 
-import java.util.Calendar;
-import java.util.Objects;
+import java.util.*;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
     private String name;
     private Calendar hired;
     private Calendar fired;
     private double salary;
-
-    public Employee(String name, Calendar hired, Calendar fired, double salary) {
-        this.name = name;
-        this.hired = hired;
-        this.fired = fired;
-        this.salary = salary;
-    }
 
     public String getName() {
         return name;
@@ -63,5 +55,56 @@ public class Employee {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public int compareTo(Employee o) {
+        return Double.compare(this.salary, o.salary);
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{"
+                + "name='" + name + '\''
+                + ", hired=" + hired
+                + ", fired=" + fired
+                + ", salary=" + salary
+                + '}';
+    }
+
+    static class Builder {
+        private String name;
+        private Calendar hired;
+        private Calendar fired;
+        private double salary;
+
+        Builder buildName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        Builder buildHired(Calendar hired) {
+            this.hired = hired;
+            return this;
+        }
+
+        Builder buildFired(Calendar fired) {
+            this.fired = fired;
+            return this;
+        }
+
+        Builder buildSalary(double salary) {
+            this.salary = salary;
+            return this;
+        }
+
+        Employee build() {
+            Employee employee = new Employee();
+            employee.name = name;
+            employee.hired = hired;
+            employee.fired = fired;
+            employee.salary = salary;
+            return employee;
+        }
     }
 }

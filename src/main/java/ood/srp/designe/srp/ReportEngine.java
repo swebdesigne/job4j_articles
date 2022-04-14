@@ -3,14 +3,14 @@ package ood.srp.designe.srp;
 import java.util.function.Predicate;
 
 public class ReportEngine<T> implements Report<T> {
-    private Store store;
+    private Report report;
 
-    public ReportEngine(Store store) {
-        this.store = store;
+    public ReportEngine(Report report) {
+        this.report = report;
     }
 
     @Override
     public T generate(Predicate<Employee> filter) {
-        return (T) new ReportToString(store).generate(filter);
+        return (T) report.generate(filter);
     }
 }
