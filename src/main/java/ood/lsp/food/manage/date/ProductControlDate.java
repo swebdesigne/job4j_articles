@@ -1,4 +1,4 @@
-package ood.lsp.food.manageDate;
+package ood.lsp.food.manage.date;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

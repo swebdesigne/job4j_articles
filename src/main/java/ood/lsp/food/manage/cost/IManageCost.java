@@ -1,4 +1,4 @@
-package ood.lsp.food.manageCost;
+package ood.lsp.food.manage.cost;
 
 import ood.lsp.food.products.Food;
 

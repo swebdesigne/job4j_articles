@@ -1,7 +1,7 @@
-package ood.lsp.food.manageCost.condition;
+package ood.lsp.food.manage.cost.condition;
 
 import ood.lsp.food.products.Food;
-import ood.lsp.food.manageDate.ProductControlDate;
+import ood.lsp.food.manage.date.ProductControlDate;
 
 import java.time.LocalDate;
 import java.util.function.Predicate;

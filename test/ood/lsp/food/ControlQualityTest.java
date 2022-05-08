@@ -1,10 +1,10 @@
 package ood.lsp.food;
 
-import ood.lsp.food.manageCost.Discount;
-import ood.lsp.food.manageCost.condition.ConditionForDiscount;
-import ood.lsp.food.manageRelocate.ConditionForJob;
-import ood.lsp.food.manageRelocate.ConditionForTrash;
-import ood.lsp.food.manageRelocate.ConditionForWarehouse;
+import ood.lsp.food.manage.cost.Discount;
+import ood.lsp.food.manage.cost.condition.ConditionForDiscount;
+import ood.lsp.food.manage.relocate.ConditionForJob;
+import ood.lsp.food.manage.relocate.ConditionForTrash;
+import ood.lsp.food.manage.relocate.ConditionForWarehouse;
 import ood.lsp.food.products.Ananas;
 import ood.lsp.food.products.Banana;
 import ood.lsp.food.products.Food;

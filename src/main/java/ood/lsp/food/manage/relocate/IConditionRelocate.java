@@ -1,4 +1,4 @@
-package ood.lsp.food.manageRelocate;
+package ood.lsp.food.manage.relocate;
 
 import ood.lsp.food.products.Food;
 
