@@ -5,7 +5,7 @@ import ood.lsp.food.products.Food;
 import java.util.*;
 
 public class Warehouse implements IStorage {
-    private Map<String, Set<Food>> products = new HashMap<>();
+    private final Map<String, Set<Food>> products = new HashMap<>();
 
     @Override
     public Map<String, Set<Food>> getProducts() {
