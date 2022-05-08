@@ -8,6 +8,7 @@ import ood.lsp.food.manage.relocate.ConditionForWarehouse;
 import ood.lsp.food.products.Ananas;
 import ood.lsp.food.products.Banana;
 import ood.lsp.food.products.Food;
+import ood.lsp.food.storage.IStorage;
 import ood.lsp.food.storage.Shop;
 import ood.lsp.food.storage.Trash;
 import ood.lsp.food.storage.Warehouse;
@@ -27,9 +28,9 @@ public class ControlQualityTest {
         int highBound = 75;
         LocalDate now = LocalDate.now();
         FinderFood finder = new FinderFood();
-        IControlQuality warehouse = new Warehouse();
+        IStorage warehouse = new Warehouse();
         List<Food> food = List.of(new Banana("Banana Warehouse", 40D, 10, "Banana", now.minusDays(2), now.plusDays(9)));
-        Map<Predicate<Food>, IControlQuality> map = Map.of(new ConditionForWarehouse().check(now, lowBound), warehouse);
+        Map<Predicate<Food>, IStorage> map = Map.of(new ConditionForWarehouse().check(now, lowBound), warehouse);
         ControlQuality controlQuality = new ControlQuality(food, map);
         controlQuality.execute(new ConditionForDiscount().check(now, highBound), new Discount());
         List<Food> expected = List.of(finder.findByName(warehouse.getProducts(), "Banana Warehouse").get(0));
@@ -42,9 +43,9 @@ public class ControlQualityTest {
         int highBound = 75;
         LocalDate now = LocalDate.now();
         FinderFood finder = new FinderFood();
-        IControlQuality shop = new Shop();
+        IStorage shop = new Shop();
         List<Food> food = List.of(new Banana("Banana Shop", 70D, 20, "Banana", now.minusDays(13), now.plusDays(17)));
-        Map<Predicate<Food>, IControlQuality> map = Map.of(new ConditionForJob().check(now, lowBound), shop);
+        Map<Predicate<Food>, IStorage> map = Map.of(new ConditionForJob().check(now, lowBound), shop);
         ControlQuality controlQuality = new ControlQuality(food, map);
         controlQuality.execute(new ConditionForDiscount().check(now, highBound), new Discount());
         List<Food> expected = List.of(finder.findByName(shop.getProducts(), "Banana Shop").get(0));
@@ -56,9 +57,9 @@ public class ControlQualityTest {
         int highBound = 75;
         LocalDate now = LocalDate.now();
         FinderFood finder = new FinderFood();
-        IControlQuality trash = new Trash();
+        IStorage trash = new Trash();
         List<Food> food = List.of(new Banana("Banana Trash", 100D, 30, "Banana", now, now));
-        Map<Predicate<Food>, IControlQuality> map = Map.of(new ConditionForTrash().check(now), trash);
+        Map<Predicate<Food>, IStorage> map = Map.of(new ConditionForTrash().check(now), trash);
         ControlQuality controlQuality = new ControlQuality(food, map);
         controlQuality.execute(new ConditionForDiscount().check(now, highBound), new Discount());
         List<Food> expected = List.of(finder.findByName(trash.getProducts(), "Banana Trash").get(0));
@@ -71,13 +72,13 @@ public class ControlQualityTest {
         int highBound = 75;
         LocalDate now = LocalDate.now();
         FinderFood finder = new FinderFood();
-        IControlQuality shop = new Shop();
+        IStorage shop = new Shop();
         List<Food> food = List.of(
                 new Ananas("Ananas", 100D, 30, "Ananas", now.minusDays(13), now.plusDays(17)),
                 new Banana("Banana", 75D, 20, "Banana", now.minusDays(13), now.plusDays(17)),
                 new Banana("Banana", 70D, 20, "Banana", now.minusDays(13), now.plusDays(17))
         );
-        Map<Predicate<Food>, IControlQuality> map = Map.of(new ConditionForJob().check(now, lowBound), shop);
+        Map<Predicate<Food>, IStorage> map = Map.of(new ConditionForJob().check(now, lowBound), shop);
         ControlQuality controlQuality = new ControlQuality(food, map);
         controlQuality.execute(new ConditionForDiscount().check(now, highBound), new Discount());
         List<Food> expected = finder.findAll(shop.getProducts());
@@ -90,13 +91,13 @@ public class ControlQualityTest {
         int highBound = 75;
         LocalDate now = LocalDate.now();
         FinderFood finder = new FinderFood();
-        IControlQuality shop = new Shop();
+        IStorage shop = new Shop();
         List<Food> food = List.of(
                 new Banana("Banana", 75D, 20, "Banana", now.minusDays(13), now.plusDays(17)),
                 new Banana("Banana", 70D, 20, "Banana", now.minusDays(13), now.plusDays(17)),
                 new Ananas("Ananas", 100D, 30, "Ananas", now.minusDays(13), now.plusDays(17))
         );
-        Map<Predicate<Food>, IControlQuality> map = Map.of(new ConditionForJob().check(now, lowBound), shop);
+        Map<Predicate<Food>, IStorage> map = Map.of(new ConditionForJob().check(now, lowBound), shop);
         ControlQuality controlQuality = new ControlQuality(food, map);
         controlQuality.execute(new ConditionForDiscount().check(now, highBound), new Discount());
         List<Food> expected = finder.findByCategory(shop.getProducts(), "Banana");
@@ -109,15 +110,15 @@ public class ControlQualityTest {
         int highBound = 75;
         LocalDate now = LocalDate.now();
         FinderFood finder = new FinderFood();
-        IControlQuality shop = new Shop();
-        IControlQuality trash = new Trash();
-        IControlQuality warehouse = new Warehouse();
+        IStorage shop = new Shop();
+        IStorage trash = new Trash();
+        IStorage warehouse = new Warehouse();
         List<Food> food = List.of(
                 new Banana("Banana Warehouse", 40D, 10, "Banana", now.minusDays(2), now.plusDays(9)),
                 new Banana("Banana Shop", 70D, 20, "Banana", now.minusDays(13), now.plusDays(17)),
                 new Banana("Banana Trash", 100D, 30, "Banana", now, now)
         );
-        Map<Predicate<Food>, IControlQuality> map = Map.of(
+        Map<Predicate<Food>, IStorage> map = Map.of(
                 new ConditionForWarehouse().check(now, lowBound), warehouse,
                 new ConditionForJob().check(now, lowBound), shop,
                 new ConditionForTrash().check(now), trash
@@ -137,7 +138,7 @@ public class ControlQualityTest {
         int lowBound = 25;
         int highBound = 75;
         LocalDate now = LocalDate.now();
-        IControlQuality shop = new Shop();
+        IStorage shop = new Shop();
         List<Food> food = List.of(
                 new Banana("Banana Shop with discount", 100D, 30, "Banana", now.minusDays(9), now.plusDays(2))
         );
