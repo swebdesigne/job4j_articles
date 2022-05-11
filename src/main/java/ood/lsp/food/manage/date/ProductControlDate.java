@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class ProductControlDate {
+    private LocalDate now = LocalDate.now();
 
     public long totalDays(LocalDate createDate, LocalDate expireDate) {
         return ChronoUnit.DAYS.between(createDate, expireDate);
@@ -13,7 +14,7 @@ public class ProductControlDate {
         return ChronoUnit.DAYS.between(createDate, now);
     }
 
-    public float percentComplete(LocalDate now, LocalDate createDate, LocalDate expireDate) {
+    public float percentComplete(LocalDate createDate, LocalDate expireDate) {
         try {
             return Math.abs((elapsedDays(now, createDate) * 100) / totalDays(createDate, expireDate));
         } catch (ArithmeticException e) {
@@ -30,7 +31,7 @@ public class ProductControlDate {
         return (!now.isBefore(createDate)) && now.isBefore(expireDate);
     }
 
-    public boolean todayIsMoreHighBoundDateAndLessExpireDate(LocalDate now, LocalDate createDate, LocalDate expireDate, int highBound) {
-        return createDateIsBeforeExpireDate(createDate, expireDate) && percentComplete(now, createDate, expireDate) >= highBound;
+    public boolean todayIsMoreHighBoundDateAndLessExpireDate(LocalDate createDate, LocalDate expireDate, int highBound) {
+        return createDateIsBeforeExpireDate(createDate, expireDate) && percentComplete(createDate, expireDate) >= highBound;
     }
 }
