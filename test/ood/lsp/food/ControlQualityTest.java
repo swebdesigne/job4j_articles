@@ -106,7 +106,6 @@ public class ControlQualityTest {
         controlQuality.execute(food);
         Food expected = new Banana("Banana Shop with discount", 70D, 30, "Banana", now.minusDays(9), now.plusDays(2));
         Food getFood = new FinderFood().findByName(shop.get(), "Banana Shop with discount").get(0);
-        System.out.println(getFood);
         assertEquals(getFood, expected);
     }
 }
