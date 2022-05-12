@@ -15,12 +15,15 @@ public class Trash implements IStorage {
     }
 
     @Override
+    public boolean accept(Food food) {
+        return !controlDate.createDateIsBeforeExpireDate(food.getCreateDate(), food.getExpireDate());
+    }
+
+    @Override
     public boolean add(List<Food> foodList) {
         boolean result = false;
         for (Food food : foodList) {
-            if (!controlDate.createDateIsBeforeExpireDate(food.getCreateDate(), food.getExpireDate())) {
-                result = products.computeIfAbsent(food.getCategory(), value -> new HashSet<>()).add(food);
-            }
+            result = products.computeIfAbsent(food.getCategory(), value -> new HashSet<>()).add(food);
         }
         return result;
     }

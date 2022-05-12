@@ -15,12 +15,15 @@ public class Warehouse implements IStorage {
     }
 
     @Override
+    public boolean accept(Food food) {
+        return controlDate.percentComplete(food.getCreateDate(), food.getExpireDate()) < 25;
+    }
+
+    @Override
     public boolean add(List<Food> foodList) {
         boolean result = false;
         for (Food food : foodList) {
-            if (controlDate.percentComplete(food.getCreateDate(), food.getExpireDate()) < 25) {
-                result = products.computeIfAbsent(food.getCategory(), value -> new HashSet<>()).add(food);
-            }
+            result = products.computeIfAbsent(food.getCategory(), value -> new HashSet<>()).add(food);
         }
         return result;
     }

@@ -20,7 +20,7 @@ public class ControlQualityTest {
     public void addToWarehouse() {
         LocalDate now = LocalDate.now();
         List<Food> food = List.of(new Banana("Banana Warehouse", 40D, 10, "Banana", now.minusDays(2), now.plusDays(9)));
-        ControlQuality controlQuality = new ControlQuality(new Warehouse());
+        ControlQuality controlQuality = new ControlQuality(List.of(new Warehouse()));
         assertTrue(controlQuality.execute(food));
     }
 
@@ -28,7 +28,7 @@ public class ControlQualityTest {
     public void addToShop() {
         LocalDate now = LocalDate.now();
         List<Food> food = List.of(new Banana("Banana Shop", 70D, 20, "Banana", now.minusDays(13), now.plusDays(17)));
-        ControlQuality controlQuality = new ControlQuality(new Shop());
+        ControlQuality controlQuality = new ControlQuality(List.of(new Shop()));
         assertTrue(controlQuality.execute(food));
     }
 
@@ -36,7 +36,7 @@ public class ControlQualityTest {
     public void addToTrash() {
         LocalDate now = LocalDate.now();
         List<Food> food = List.of(new Banana("Banana Trash", 100D, 30, "Banana", now, now));
-        ControlQuality controlQuality = new ControlQuality(new Trash());
+        ControlQuality controlQuality = new ControlQuality(List.of(new Trash()));
         assertTrue(controlQuality.execute(food));
     }
 
@@ -50,7 +50,7 @@ public class ControlQualityTest {
                 new Banana("Banana", 75D, 20, "Banana", now.minusDays(13), now.plusDays(17)),
                 new Banana("Banana", 70D, 20, "Banana", now.minusDays(13), now.plusDays(17))
         );
-        ControlQuality controlQuality = new ControlQuality(shop);
+        ControlQuality controlQuality = new ControlQuality(List.of(shop));
         controlQuality.execute(food);
         List<Food> expected = finder.findAll(shop.get());
         assertEquals(food, expected);
@@ -66,7 +66,7 @@ public class ControlQualityTest {
                 new Banana("Banana", 70D, 20, "Banana", now.minusDays(13), now.plusDays(17)),
                 new Ananas("Ananas", 100D, 30, "Ananas", now.minusDays(13), now.plusDays(17))
         );
-        ControlQuality controlQuality = new ControlQuality(shop);
+        ControlQuality controlQuality = new ControlQuality(List.of(shop));
         controlQuality.execute(food);
         List<Food> expected = finder.findByCategory(shop.get(), "Banana");
         assertEquals(List.of(food.get(0), food.get(1)), expected);
@@ -84,9 +84,7 @@ public class ControlQualityTest {
                 new Banana("Banana Shop", 70D, 20, "Banana", now.minusDays(13), now.plusDays(17)),
                 new Banana("Banana Trash", 100D, 30, "Banana", now, now)
         );
-        new ControlQuality(shop).execute(food);
-        new ControlQuality(warehouse).execute(food);
-        new ControlQuality(trash).execute(food);
+        new ControlQuality(List.of(shop, warehouse, trash)).execute(food);
         List<Food> expected = List.of(
                 finder.findByName(warehouse.get(), "Banana Warehouse").get(0),
                 finder.findByName(shop.get(), "Banana Shop").get(0),
@@ -102,7 +100,7 @@ public class ControlQualityTest {
         List<Food> food = List.of(
                 new Banana("Banana Shop with discount", 100D, 30, "Banana", now.minusDays(9), now.plusDays(2))
         );
-        ControlQuality controlQuality = new ControlQuality(shop);
+        ControlQuality controlQuality = new ControlQuality(List.of(shop));
         controlQuality.execute(food);
         Food expected = new Banana("Banana Shop with discount", 70D, 30, "Banana", now.minusDays(9), now.plusDays(2));
         Food getFood = new FinderFood().findByName(shop.get(), "Banana Shop with discount").get(0);
