@@ -15,10 +15,11 @@ public class ControlQuality {
     }
 
     public boolean execute(List<Food> foods) {
-        boolean result = false;
         for (IStorage storage : storages) {
-            result |= storage.add(foods.stream().filter(food -> storage.accept(food)).collect(Collectors.toList()));
+            if (!storage.add(foods.stream().filter(food -> storage.accept(food)).collect(Collectors.toList()))) {
+                return false;
+            }
         }
-        return result;
+        return true;
     }
 }
