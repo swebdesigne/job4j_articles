@@ -4,17 +4,17 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class ProductControlDate {
-    private LocalDate now = LocalDate.now();
+    private static LocalDate now = LocalDate.now();
 
-    public long totalDays(LocalDate createDate, LocalDate expireDate) {
+    public static long totalDays(LocalDate createDate, LocalDate expireDate) {
         return ChronoUnit.DAYS.between(createDate, expireDate);
     }
 
-    public long elapsedDays(LocalDate now, LocalDate createDate) {
+    public static long elapsedDays(LocalDate now, LocalDate createDate) {
         return ChronoUnit.DAYS.between(createDate, now);
     }
 
-    public float percentComplete(LocalDate createDate, LocalDate expireDate) {
+    public static float percentComplete(LocalDate createDate, LocalDate expireDate) {
         try {
             return Math.abs((elapsedDays(now, createDate) * 100) / totalDays(createDate, expireDate));
         } catch (ArithmeticException e) {
@@ -23,15 +23,19 @@ public class ProductControlDate {
         return 100;
     }
 
-    public boolean createDateIsBeforeExpireDate(LocalDate createDate, LocalDate expireDate) {
+    public static boolean createDateIsBeforeExpireDate(LocalDate createDate, LocalDate expireDate) {
         return createDate.isBefore(expireDate);
     }
 
-    public boolean todayIsWithinRange(LocalDate now, LocalDate createDate, LocalDate expireDate) {
-        return (!now.isBefore(createDate)) && now.isBefore(expireDate);
+    public static boolean createDateIsAfterExpireDate(LocalDate createDate, LocalDate expireDate) {
+        return createDate.equals(expireDate) || createDate.isAfter(expireDate);
     }
 
-    public boolean todayIsMoreHighBoundDateAndLessExpireDate(LocalDate createDate, LocalDate expireDate, int highBound) {
+    public static boolean todayIsWithinRange(LocalDate now, LocalDate createDate, LocalDate expireDate) {
+        return (now.isAfter(createDate)) && now.isBefore(expireDate);
+    }
+
+    public static boolean todayIsMoreHighBoundDateAndLessExpireDate(LocalDate createDate, LocalDate expireDate, int highBound) {
         return createDateIsBeforeExpireDate(createDate, expireDate) && percentComplete(createDate, expireDate) >= highBound;
     }
 }

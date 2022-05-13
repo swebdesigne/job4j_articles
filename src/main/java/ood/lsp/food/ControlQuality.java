@@ -17,7 +17,7 @@ public class ControlQuality {
     public boolean execute(List<Food> foods) {
         boolean result = false;
         for (IStorage storage : storages) {
-            result = storage.add(foods.stream().filter(food -> storage.accept(food)).collect(Collectors.toList()));
+            result |= storage.add(foods.stream().filter(food -> storage.accept(food)).collect(Collectors.toList()));
         }
         return result;
     }

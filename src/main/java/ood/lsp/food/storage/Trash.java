@@ -7,7 +7,6 @@ import java.util.*;
 
 public class Trash implements IStorage {
     private final Map<String, Set<Food>> products = new HashMap<>();
-    private final ProductControlDate controlDate = new ProductControlDate();
 
     @Override
     public Map<String, Set<Food>> get() {
@@ -16,7 +15,7 @@ public class Trash implements IStorage {
 
     @Override
     public boolean accept(Food food) {
-        return !controlDate.createDateIsBeforeExpireDate(food.getCreateDate(), food.getExpireDate());
+        return ProductControlDate.createDateIsAfterExpireDate(food.getCreateDate(), food.getExpireDate());
     }
 
     @Override
