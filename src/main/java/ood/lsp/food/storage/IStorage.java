@@ -9,5 +9,5 @@ import java.util.Set;
 public interface IStorage {
     boolean accept(Food food);
     Map<String, Set<Food>> get();
-    boolean add(List<Food> food);
+    boolean add(Food food);
 }

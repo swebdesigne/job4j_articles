@@ -21,14 +21,10 @@ public class Shop implements IStorage {
     }
 
     @Override
-    public boolean add(List<Food> foodList) {
-        boolean result = false;
-        for (Food food : foodList) {
-            if (ProductControlDate.todayIsMoreHighBoundDateAndLessExpireDate(food.getCreateDate(), food.getExpireDate(), 75)) {
-                food.setPrice(new Discount().setCost(food));
-            }
-            result = products.computeIfAbsent(food.getCategory(), value -> new HashSet<>()).add(food);
+    public boolean add(Food food) {
+        if (ProductControlDate.todayIsMoreHighBoundDateAndLessExpireDate(food.getCreateDate(), food.getExpireDate(), 75)) {
+            food.setPrice(new Discount().setCost(food));
         }
-        return result;
+        return products.computeIfAbsent(food.getCategory(), value -> new HashSet<>()).add(food);
     }
 }

@@ -19,11 +19,7 @@ public class Warehouse implements IStorage {
     }
 
     @Override
-    public boolean add(List<Food> foodList) {
-        boolean result = false;
-        for (Food food : foodList) {
-            result = products.computeIfAbsent(food.getCategory(), value -> new HashSet<>()).add(food);
-        }
-        return result;
+    public boolean add(Food food) {
+        return products.computeIfAbsent(food.getCategory(), value -> new HashSet<>()).add(food);
     }
 }

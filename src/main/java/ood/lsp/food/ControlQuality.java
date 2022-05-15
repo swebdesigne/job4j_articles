@@ -5,20 +5,24 @@ import ood.lsp.food.products.Food;
 import ood.lsp.food.storage.IStorage;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ControlQuality {
-    private List<IStorage> storages;
+    private final List<IStorage> storages;
 
     public ControlQuality(List<IStorage> storages) {
         this.storages = storages;
     }
 
     public boolean execute(List<Food> foods) {
-        boolean result = false;
         for (IStorage storage : storages) {
-            result |= storage.add(foods.stream().filter(food -> storage.accept(food)).collect(Collectors.toList()));
+            for (Food food : foods) {
+                if (storage.accept(food)) {
+                    if (!storage.add(food)) {
+                        return false;
+                    }
+                }
+            }
         }
-        return result;
+        return true;
     }
 }
