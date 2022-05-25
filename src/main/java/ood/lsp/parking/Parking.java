@@ -23,12 +23,9 @@ public class Parking {
                     "Cargo", new CargoParking(2)
                 )
         );
-//        System.out.println(parking.totalAmountSpace());
         IParking cargo = parking.parking.get("Passenger");
-        cargo.takeParkingPlace(0);
+
         cargo.takeParkingPlace(2);
-        cargo.getAvailableSpace();
-        cargo.freeUpSpace(2);
-        cargo.getAvailableSpace();
+        cargo.isSpaceForCargoCar();
     }
 }

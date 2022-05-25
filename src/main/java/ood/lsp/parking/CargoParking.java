@@ -20,12 +20,22 @@ public class CargoParking implements IParking {
     }
 
     @Override
+    public boolean accept(int size) {
+        return false;
+    }
+
+    @Override
     public int getAmountSpace() {
         return amountSpace.length;
     }
 
     @Override
     public void getAvailableSpace() {
+
+    }
+
+    @Override
+    public void getOccupiedSpace() {
 
     }
 
