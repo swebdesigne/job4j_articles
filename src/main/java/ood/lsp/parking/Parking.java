@@ -1,26 +1,34 @@
 package ood.lsp.parking;
 
-public class Parking implements IParking {
-    private int amountCargoCarParkingPlace;
-    private int amountPassengerCarParkingPlace;
+import java.util.Map;
 
-    public Parking(int amountCargoCarParkingPlace, int amountPassengerCarParkingPlace) {
-        this.amountCargoCarParkingPlace = amountCargoCarParkingPlace;
-        this.amountPassengerCarParkingPlace = amountPassengerCarParkingPlace;
+public class Parking {
+    private Map<String, IParking> parking;
+
+    public Parking(Map<String, IParking> parking) {
+        this.parking = parking;
     }
 
-    @Override
-    public void checkAvailableParkingSpace() {
-
+    public int totalAmountSpace() {
+        return parking.entrySet().stream()
+                .map(Map.Entry::getValue)
+                .mapToInt(parking -> parking.getAmountSpace())
+                .sum();
     }
 
-    @Override
-    public void takeParkingPlace() {
-
-    }
-
-    @Override
-    public void totalAmountParkingSpace(Vehicle vehicle) {
-
+    public static void main(String[] args) {
+        Parking parking = new Parking(
+                Map.of(
+                    "Passenger", new PassengerParking(3),
+                    "Cargo", new CargoParking(2)
+                )
+        );
+//        System.out.println(parking.totalAmountSpace());
+        IParking cargo = parking.parking.get("Passenger");
+        cargo.takeParkingPlace(0);
+        cargo.takeParkingPlace(2);
+        cargo.getAvailableSpace();
+        cargo.freeUpSpace(2);
+        cargo.getAvailableSpace();
     }
 }

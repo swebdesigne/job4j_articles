@@ -1,7 +1,10 @@
 package ood.lsp.parking;
 
 public interface IParking {
-    void checkAvailableParkingSpace();
-    void takeParkingPlace();
-    void totalAmountParkingSpace(Vehicle vehicle);
+    void freeUpSpace(int index);
+    boolean isSpaceForCargoCar();
+    int getAmountSpace();
+    void getAvailableSpace();
+    void takeParkingPlace(int index);
+    boolean isParkingSpaceAvailable(int index);
 }
