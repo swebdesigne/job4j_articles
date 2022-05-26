@@ -1,33 +1,36 @@
 package ood.lsp.parking;
 
+import java.util.Map;
+import java.util.Objects;
+
 public class Place {
-    private boolean[] cargo;
-    private boolean[] passenger;
+    private boolean[] pickedTypePlace;
+    private Map<Integer, boolean[]> spaces;
     private static final int CARGO_SIZE = 2;
     private static final int PASSENGER_SIZE = 1;
 
     public Place(int capacityCargo, int capacityPassenger) {
-        this.cargo = new boolean[capacityCargo];
-        this.passenger = new boolean[capacityPassenger];
+        spaces = Map.of(
+                PASSENGER_SIZE, new boolean[capacityPassenger],
+                CARGO_SIZE, new boolean[capacityCargo]
+        );
     }
 
-    public boolean[] getCargo() {
-        return cargo;
+    void pickTypePlace(int size) {
+        pickedTypePlace = spaces.get(size);
     }
 
-    public void setCargo(boolean[] cargo) {
-        this.cargo = cargo;
+    public boolean[] getSpace() {
+        return pickedTypePlace;
     }
 
-    public boolean[] getPassenger() {
-        return passenger;
+    public boolean getStatus(int index) {
+        Objects.checkIndex(index, pickedTypePlace.length);
+        return pickedTypePlace[index];
     }
 
-    public boolean getPassengerByIndex(int index) {
-        return passenger[index];
-    }
-
-    public void setPassenger(int index, boolean status) {
-        this.passenger[index] = status;
+    public void setStatus(int index, boolean status) {
+        Objects.checkIndex(index, pickedTypePlace.length);
+        pickedTypePlace[index] = status;
     }
 }
