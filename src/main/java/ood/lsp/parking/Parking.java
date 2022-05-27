@@ -1,5 +1,6 @@
 package ood.lsp.parking;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class Parking implements IParking {
@@ -7,17 +8,17 @@ public class Parking implements IParking {
     private final int capacity;
 
     public Parking(int capacityCargo, int capacityPassenger) {
-        capacity = (capacityCargo + capacityPassenger) - 1;
+        capacity = capacityCargo + capacityPassenger;
         this.place = new Place(capacityCargo, capacityPassenger);
     }
 
     @Override
-    public boolean isSpaceForCargoCar() {
-        IntStream.range(0, place.getSpace().length)
-                .filter(index -> index < place.getSpace().length - 1)
+    public String[] isPlaceForCargoCarOnPassengerParking() {
+        return IntStream.range(0, place.getSpace().length)
+                .filter(index -> index < place.getCapacity() - 1)
                 .filter(index -> !place.getStatus(index) && !place.getStatus(index + 1))
-                .forEach(space -> System.out.printf("There is available on the passenger of place: [%s, %s]\n", space, space + 1));
-        return true;
+                .mapToObj(index -> "[" + index + ", " + (index + 1) + "]")
+                .toArray(String[]::new);
     }
 
     public int getAmountPlace() {
@@ -65,9 +66,9 @@ public class Parking implements IParking {
     public static void main(String[] args) {
         Parking parking = new Parking(3, 4);
         parking.accept(1);
-        parking.takeParkingPlace(2);
-        System.out.println(parking.place.getStatus(2));
-        parking.isSpaceForCargoCar();
+        parking.takeParkingPlace(0);
+        Arrays.stream(parking.isPlaceForCargoCarOnPassengerParking()).forEach(System.out::println);
+        System.out.println();
         parking.getOccupiedSpace();
     }
 }

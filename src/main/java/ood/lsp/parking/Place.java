@@ -1,5 +1,6 @@
 package ood.lsp.parking;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,6 +21,10 @@ public class Place {
         pickedTypePlace = spaces.get(size);
     }
 
+    public int getCapacity() {
+        return pickedTypePlace.length;
+    }
+
     public boolean[] getSpace() {
         return pickedTypePlace;
     }
@@ -32,5 +37,13 @@ public class Place {
     public void setStatus(int index, boolean status) {
         Objects.checkIndex(index, pickedTypePlace.length);
         pickedTypePlace[index] = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Place{"
+                + "pickedTypePlace=" + Arrays.toString(pickedTypePlace)
+                + ", spaces=" + spaces
+                + '}';
     }
 }
