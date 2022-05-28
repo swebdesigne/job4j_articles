@@ -1,13 +1,11 @@
 package ood.lsp.parking;
 
-import java.util.List;
-
-public interface IParking {
-    void freeUpSpace(int index);
-    String[] isPlaceForCargoCarOnPassengerParking();
-    void accept(int size);
-    int getAmountSpace();
-    void getAvailableSpace();
-    void getOccupiedSpace();
+public interface IParking<T> {
     void takeParkingPlace(int index);
+    void freeUpPlace(int index);
+    String[] pairAvailableParkingPlace();
+    int getCapacity();
+    void accept(T vehicle);
+    int[] getAvailablePlace();
+    int[] getOccupiedPlace();
 }

@@ -1,5 +1,8 @@
 package ood.lsp.parking;
 
+import tdd.CinemaTest;
+
+import java.net.Inet4Address;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
@@ -9,12 +12,14 @@ public class Place {
     private Map<Integer, boolean[]> spaces;
     private static final int CARGO_SIZE = 2;
     private static final int PASSENGER_SIZE = 1;
+    private Map<Integer, Map<Integer, IVehicle>> vehicle;
 
     public Place(int capacityCargo, int capacityPassenger) {
         spaces = Map.of(
                 PASSENGER_SIZE, new boolean[capacityPassenger],
                 CARGO_SIZE, new boolean[capacityCargo]
         );
+
     }
 
     void pickTypePlace(int size) {
