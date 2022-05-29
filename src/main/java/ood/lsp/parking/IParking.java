@@ -5,7 +5,7 @@ public interface IParking<T> {
     void freeUpPlace(int index);
     String[] pairAvailableParkingPlace();
     int getCapacity();
-    void accept(T vehicle);
-    int[] getAvailablePlace();
-    int[] getOccupiedPlace();
+    void accept(int size);
+    int[] availablePlace();
+    int[] occupiedPlace();
 }

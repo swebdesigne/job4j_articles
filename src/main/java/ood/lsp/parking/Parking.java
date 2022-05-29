@@ -1,6 +1,6 @@
 package ood.lsp.parking;
 
-import java.util.Arrays;
+import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -36,13 +36,21 @@ public class Parking<T extends IVehicle> implements IParking<T> {
                 .toArray(String[]::new);
     }
 
+    public void takePairPlaceForCargoCarInPassengerParking(String pairPlace) {
+        Scanner scanner = new Scanner(pairPlace.replaceAll("[^\\d ]", ""));
+        while (scanner.hasNextInt()) {
+            takeParkingPlace(scanner.nextInt());
+        }
+        scanner.close();
+    }
+
     public int getFullCapacity() {
         return capacity;
     }
 
     @Override
-    public void accept(T vehicle) {
-        place.pickTypePlace(vehicle.sizeParkingPlace());
+    public void accept(int size) {
+        place.pickTypePlace(size);
     }
 
     @Override
@@ -51,12 +59,12 @@ public class Parking<T extends IVehicle> implements IParking<T> {
     }
 
     @Override
-    public int[] getAvailablePlace() {
+    public int[] availablePlace() {
         return getPlaceByPredicate(index -> !place.getStatus(index));
     }
 
     @Override
-    public int[] getOccupiedPlace() {
+    public int[] occupiedPlace() {
         return getPlaceByPredicate(place::getStatus);
     }
 
@@ -64,17 +72,5 @@ public class Parking<T extends IVehicle> implements IParking<T> {
         return IntStream.range(0, place.getCapacity())
                 .filter(predicate::test)
                 .toArray();
-    }
-
-    public static void main(String[] args) {
-        IVehicle passenger = new PassengerCar(1);
-        Parking<IVehicle> parking = new Parking<>(3, 4);
-        parking.accept(passenger);
-        parking.takeParkingPlace(0);
-        parking.takeParkingPlace(3);
-        Arrays.stream(parking.pairAvailableParkingPlace()).forEach(System.out::println);
-        System.out.println();
-        Arrays.stream(parking.getOccupiedPlace()).forEach(System.out::println);
-        System.out.println(parking.getFullCapacity());
     }
 }
