@@ -23,7 +23,7 @@ public class Exit implements IManage {
             ConsoleInput.stop();
         } else {
             System.out.println("Wrong answer, please repeat!");
-            ui.run();
+            execute(ui);
         }
     }
 }
