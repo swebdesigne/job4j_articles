@@ -1,6 +1,5 @@
 package ood.lsp.parking;
 
-import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
@@ -15,10 +14,12 @@ public class Parking<T extends IVehicle> implements IParking<T> {
     }
 
     @Override
-    public void takeParkingPlace(int index) {
-        if (!place.getStatus(index)) {
-            place.setStatus(index, true);
+    public boolean takeParkingPlace(int index) {
+        if (place.getStatus(index)) {
+            return false;
         }
+        place.setStatus(index, true);
+        return true;
     }
 
     @Override
@@ -60,14 +61,13 @@ public class Parking<T extends IVehicle> implements IParking<T> {
     }
 
     public String[] allAvailablePlace() {
-        return place.getAllPlace().entrySet().stream()
-                .map(Map.Entry::getKey)
+        return place.getAllPlace().keySet().stream()
                 .map(index -> {
                             String res = "[";
                             boolean[] tmp = place.getAllPlace().get(index);
                             for (int i = 0; i < tmp.length; i++) {
                                 if (!tmp[i]) {
-                                    if (i != 0 && i < tmp.length) {
+                                    if (i != 0) {
                                         res += ", ";
                                     }
                                     res += i;

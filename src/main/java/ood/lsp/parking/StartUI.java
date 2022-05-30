@@ -46,11 +46,12 @@ public class StartUI {
     public static void main(String[] args) {
         List<IManage> control = List.of(
                 new NewCar(),
-                new AvailablePlace(),
+                new AllAvailablePlace(),
+                new TakePlace(),
                 new SelectParking(),
                 new Exit()
         );
-        StartUI parkingManage = new StartUI(control, new Parking<>(3, 4));
+        StartUI parkingManage = new StartUI(control, new Parking<>(10, 4));
         parkingManage.run();
     }
 }

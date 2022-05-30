@@ -2,11 +2,9 @@ package ood.lsp.parking.manage.pariking;
 
 import ood.lsp.parking.StartUI;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
-public class AvailablePlace implements IManage {
+public class AllAvailablePlace implements IManage {
     @Override
     public String msg() {
         return "All available place.";

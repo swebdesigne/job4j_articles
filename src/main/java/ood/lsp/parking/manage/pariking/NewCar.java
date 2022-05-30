@@ -11,9 +11,9 @@ public class NewCar implements IManage {
     }
 
     private IVehicle createCar() {
+        String numberCar = "";
         int random = random(2);
         String letters = "ACIDIFY";
-        String numberCar = new String();
         numberCar += random(9);
         numberCar += random(9);
         numberCar += random(9);
