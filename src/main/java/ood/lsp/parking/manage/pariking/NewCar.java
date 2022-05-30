@@ -6,24 +6,24 @@ import ood.lsp.parking.StartUI;
 import ood.lsp.parking.PassengerCar;
 
 public class NewCar implements IManage {
-    public static int random(int to) {
+    private int random(int to) {
         return (int) (Math.random() * to);
     }
 
-    public IVehicle createCar() {
-        String letters = "ACIDIFY";
+    private IVehicle createCar() {
         int random = random(2);
-        StringBuilder numberCar = new StringBuilder();
-        numberCar.append(random(9))
-                .append(random(9))
-                .append(random(9))
-                .append(letters.charAt(random(7)))
-                .append(letters.charAt(random(7)))
-                .append(letters.charAt(random(7)));
+        String letters = "ACIDIFY";
+        String numberCar = new String();
+        numberCar += random(9);
+        numberCar += random(9);
+        numberCar += random(9);
+        numberCar += letters.charAt(random(7));
+        numberCar += letters.charAt(random(7));
+        numberCar += letters.charAt(random(7));
         if (random == 1) {
-            return new PassengerCar(1, numberCar.toString());
+            return new PassengerCar(1, numberCar);
         }
-        return new CargoCar(2, numberCar.toString());
+        return new CargoCar(2, numberCar);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class NewCar implements IManage {
     @Override
     public void execute(StartUI ui) {
         IVehicle car = createCar();
-        System.out.printf("New car is created:[Number: %s, Parking size: %s]\n",
+        System.out.printf("New car is created: [Number: %s, Parking size: %s]\n",
                 car.getNumber(), car.sizeParkingPlace()
         );
         ui.setVehicle(car);
