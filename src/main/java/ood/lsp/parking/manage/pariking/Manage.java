@@ -10,5 +10,4 @@ public class Manage {
     public void execute() {
         iManage.msg();
     }
-
 }
