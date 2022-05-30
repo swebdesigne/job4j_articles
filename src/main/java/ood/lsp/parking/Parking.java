@@ -1,5 +1,6 @@
 package ood.lsp.parking;
 
+import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
@@ -29,7 +30,7 @@ public class Parking<T extends IVehicle> implements IParking<T> {
 
     @Override
     public String[] pairAvailableParkingPlace() {
-        return IntStream.range(0, place.getSpace().length)
+        return IntStream.range(0, place.getPlaceByIndex().length)
                 .filter(index -> index < place.getCapacity() - 1)
                 .filter(index -> !place.getStatus(index) && !place.getStatus(index + 1))
                 .mapToObj(index -> "[" + index + ", " + (index + 1) + "]")
@@ -56,6 +57,25 @@ public class Parking<T extends IVehicle> implements IParking<T> {
     @Override
     public int getCapacity() {
         return place.getCapacity();
+    }
+
+    public String[] allAvailablePlace() {
+        return place.getAllPlace().entrySet().stream()
+                .map(Map.Entry::getKey)
+                .map(index -> {
+                            String res = "[";
+                            boolean[] tmp = place.getAllPlace().get(index);
+                            for (int i = 0; i < tmp.length; i++) {
+                                if (!tmp[i]) {
+                                    if (i != 0 && i < tmp.length) {
+                                        res += ", ";
+                                    }
+                                    res += i;
+                                }
+                            }
+                            return res + "]";
+                        }
+                ).toArray(String[]::new);
     }
 
     @Override

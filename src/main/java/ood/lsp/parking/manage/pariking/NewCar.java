@@ -6,7 +6,6 @@ import ood.lsp.parking.StartUI;
 import ood.lsp.parking.PassengerCar;
 
 public class NewCar implements IManage {
-
     public static int random(int to) {
         return (int) (Math.random() * to);
     }
@@ -33,12 +32,12 @@ public class NewCar implements IManage {
     }
 
     @Override
-    public void execute(StartUI manage) {
+    public void execute(StartUI ui) {
         IVehicle car = createCar();
         System.out.printf("New car is created:[Number: %s, Parking size: %s]\n",
                 car.getNumber(), car.sizeParkingPlace()
         );
-        manage.setVehicle(car);
-        manage.run();
+        ui.setVehicle(car);
+        ui.run();
     }
 }

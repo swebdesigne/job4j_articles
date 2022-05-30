@@ -6,6 +6,5 @@ import java.io.IOException;
 
 public interface IManage {
     String msg();
-
-    void execute(StartUI parkingManage) throws IOException;
+    void execute(StartUI parkingManage);
 }

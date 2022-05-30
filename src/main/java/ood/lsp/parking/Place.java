@@ -1,6 +1,7 @@
 package ood.lsp.parking;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -26,8 +27,12 @@ public class Place {
         return pickedTypePlace.length;
     }
 
-    public boolean[] getSpace() {
+    public boolean[] getPlaceByIndex() {
         return pickedTypePlace;
+    }
+
+    public  Map<Integer, boolean[]> getAllPlace() {
+        return new HashMap<>(place);
     }
 
     public boolean getStatus(int index) {
