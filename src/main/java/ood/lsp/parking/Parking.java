@@ -15,7 +15,7 @@ public class Parking<T extends IVehicle> implements IParking<T> {
 
     @Override
     public boolean takeParkingPlace(int index) {
-        if (place.getStatus(index)) {
+        if ((index < 0 || index > place.getCapacity()) || place.getStatus(index)) {
             return false;
         }
         place.setStatus(index, true);

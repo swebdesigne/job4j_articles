@@ -1,9 +1,6 @@
 package ood.lsp.parking;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Place {
     private static final int CARGO_SIZE = 2;
