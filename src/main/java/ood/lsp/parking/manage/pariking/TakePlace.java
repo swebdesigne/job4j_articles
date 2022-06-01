@@ -2,6 +2,7 @@ package ood.lsp.parking.manage.pariking;
 
 import ood.lsp.parking.IVehicle;
 import ood.lsp.parking.StartUI;
+import org.apache.commons.math3.analysis.function.Add;
 
 import java.util.Optional;
 
@@ -20,11 +21,7 @@ public class TakePlace implements IManage {
             int size = ui.getVehicle().sizeParkingPlace();
             ui.parking().accept(size);
             System.out.printf("Car has a size parking place - %s\n", size);
-            if (size == 1) {
-                new AddToParking(new PPassenger()).execute(ui);
-            } else {
-                new AddToParking(new PCargo()).execute(ui);
-            }
+            new AddToParking(size).add(ui);
             System.out.println("Car was added to parking");
         }
         ui.run();

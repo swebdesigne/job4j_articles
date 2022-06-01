@@ -63,14 +63,17 @@ public class Parking<T extends IVehicle> implements IParking<T> {
     public String[] allAvailablePlace() {
         return place.getAllPlace().keySet().stream()
                 .map(index -> {
-                            String res = "[";
+                            String res = "";
                             boolean[] tmp = place.getAllPlace().get(index);
-                            for (int i = 0; i < tmp.length; i++) {
-                                if (!tmp[i]) {
-                                    if (i != 0) {
-                                        res += ", ";
+                            if (tmp.length > 0) {
+                                res = "[";
+                                for (int i = 0; i < tmp.length; i++) {
+                                    if (!tmp[i]) {
+                                        if (i != 0) {
+                                            res += ", ";
+                                        }
+                                        res += i;
                                     }
-                                    res += i;
                                 }
                             }
                             return res + "]";

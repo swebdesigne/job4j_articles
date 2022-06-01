@@ -15,7 +15,7 @@ public class AllAvailablePlace implements IManage {
         IntStream.range(0, ui.parking().allAvailablePlace().length).forEach(
                 index -> {
                     String places = ui.parking().allAvailablePlace()[index];
-                    System.out.printf("Parking № %s: %s\n", index, places.equals("[]") ? "no available place" : places);
+                    System.out.printf("Parking № %s: %s\n", index, places.equals("") ? "no available place" : places);
                 }
         );
         ui.run();

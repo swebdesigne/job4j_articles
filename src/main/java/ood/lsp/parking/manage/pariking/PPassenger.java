@@ -19,7 +19,7 @@ public class PPassenger implements IAddToParking {
             System.out.printf("Empty place: %s\n", Arrays.toString(ui.parking().availablePlace()));
             int ans = ConsoleInput.askInt(ConsoleInput.askStr());
             if (!ui.parking().takeParkingPlace(ans)) {
-                System.out.printf("Please choose another place № %s", ans);
+                System.out.printf("Please choose another place № %s\n", ans);
                 add(ui);
             }
         }
