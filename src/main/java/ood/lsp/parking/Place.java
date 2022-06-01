@@ -3,11 +3,10 @@ package ood.lsp.parking;
 import java.util.*;
 
 public class Place {
+    private boolean[] pickedTypePlace;
     private static final int CARGO_SIZE = 2;
     private static final int PASSENGER_SIZE = 1;
-    private boolean[] pickedTypePlace;
     private final Map<Integer, boolean[]> place;
-    private Map<Integer, Map<Integer, IVehicle>> vehicle;
 
     public Place(int capacityCargo, int capacityPassenger) {
         place = Map.of(
@@ -16,7 +15,7 @@ public class Place {
         );
     }
 
-    void pickTypePlace(int size) {
+    void pickTypeParking(int size) {
         pickedTypePlace = place.get(size);
     }
 

@@ -1,58 +1,60 @@
 package ood.lsp.parking;
 
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-public class Parking<T extends IVehicle> implements IParking<T> {
+public class Parking implements IParking {
     private final Place place;
-    private final int capacity;
+    private int pickedPlace;
 
     public Parking(int capacityCargo, int capacityPassenger) {
-        capacity = capacityCargo + capacityPassenger;
         this.place = new Place(capacityCargo, capacityPassenger);
     }
 
     @Override
-    public boolean takeParkingPlace(int index) {
-        if ((index < 0 || index > place.getCapacity()) || place.getStatus(index)) {
-            return false;
+    public boolean takePlace() {
+        OptionalInt optional = availablePlaceOnParking();
+        if (optional.isPresent()) {
+                place.setStatus(optional.getAsInt(), true);
+        } else {
+            if (pickedPlace > 1) {
+                pickPlace(1);
+                Optional<String> isExists = pairAvailableParkingPlace();
+                if (isExists.isEmpty()) {
+                    return false;
+                }
+                takePairPlaceForCargoCarInPassengerParking(isExists.get());
+            } else {
+                return false;
+            }
         }
-        place.setStatus(index, true);
         return true;
     }
 
     @Override
-    public void freeUpPlace(int index) {
-        if (place.getStatus(index)) {
-            place.setStatus(index, false);
-        }
-    }
-
-    @Override
-    public String[] pairAvailableParkingPlace() {
+    public Optional<String> pairAvailableParkingPlace() {
         return IntStream.range(0, place.getPlaceByIndex().length)
                 .filter(index -> index < place.getCapacity() - 1)
                 .filter(index -> !place.getStatus(index) && !place.getStatus(index + 1))
                 .mapToObj(index -> "[" + index + ", " + (index + 1) + "]")
-                .toArray(String[]::new);
+                .findFirst();
     }
 
     public void takePairPlaceForCargoCarInPassengerParking(String pairPlace) {
         Scanner scanner = new Scanner(pairPlace.replaceAll("[^\\d ]", ""));
         while (scanner.hasNextInt()) {
-            takeParkingPlace(scanner.nextInt());
+            place.setStatus(scanner.nextInt(), true);
         }
         scanner.close();
     }
 
-    public int getFullCapacity() {
-        return capacity;
-    }
-
     @Override
-    public void accept(int size) {
-        place.pickTypePlace(size);
+    public void pickPlace(int size) {
+        pickedPlace = size;
+        place.pickTypeParking(size);
     }
 
     @Override
@@ -82,18 +84,18 @@ public class Parking<T extends IVehicle> implements IParking<T> {
     }
 
     @Override
-    public int[] availablePlace() {
+    public OptionalInt availablePlaceOnParking() {
         return getPlaceByPredicate(index -> !place.getStatus(index));
     }
 
     @Override
-    public int[] occupiedPlace() {
+    public OptionalInt occupiedOnParking() {
         return getPlaceByPredicate(place::getStatus);
     }
 
-    private int[] getPlaceByPredicate(Predicate<Integer> predicate) {
+    private OptionalInt getPlaceByPredicate(Predicate<Integer> predicate) {
         return IntStream.range(0, place.getCapacity())
                 .filter(predicate::test)
-                .toArray();
+                .findFirst();
     }
 }
