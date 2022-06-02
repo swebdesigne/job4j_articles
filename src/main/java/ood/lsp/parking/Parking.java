@@ -15,10 +15,10 @@ public class Parking implements IParking {
     }
 
     @Override
-    public boolean takePlace() {
+    public boolean takePlace(IVehicle car) {
         OptionalInt optional = availablePlaceOnParking();
         if (optional.isPresent()) {
-                place.setStatus(optional.getAsInt(), true);
+            place.setStatus(optional.getAsInt(), car);
         } else {
             if (pickedPlace > 1) {
                 pickPlace(1);
@@ -26,7 +26,7 @@ public class Parking implements IParking {
                 if (isExists.isEmpty()) {
                     return false;
                 }
-                takePairPlaceForCargoCarInPassengerParking(isExists.get());
+                takePairPlaceForCargoCarInPassengerParking(isExists.get(), car);
             } else {
                 return false;
             }
@@ -38,15 +38,15 @@ public class Parking implements IParking {
     public Optional<String> pairAvailableParkingPlace() {
         return IntStream.range(0, place.getPlaceByIndex().length)
                 .filter(index -> index < place.getCapacity() - 1)
-                .filter(index -> !place.getStatus(index) && !place.getStatus(index + 1))
+                .filter(index -> place.getStatus(index) && place.getStatus(index + 1))
                 .mapToObj(index -> "[" + index + ", " + (index + 1) + "]")
                 .findFirst();
     }
 
-    public void takePairPlaceForCargoCarInPassengerParking(String pairPlace) {
+    public void takePairPlaceForCargoCarInPassengerParking(String pairPlace, IVehicle car) {
         Scanner scanner = new Scanner(pairPlace.replaceAll("[^\\d ]", ""));
         while (scanner.hasNextInt()) {
-            place.setStatus(scanner.nextInt(), true);
+            place.setStatus(scanner.nextInt(), car);
         }
         scanner.close();
     }
@@ -63,19 +63,16 @@ public class Parking implements IParking {
     }
 
     public String[] allAvailablePlace() {
-        return place.getAllPlace().keySet().stream()
-                .map(index -> {
+        return place.getAllPlace().values().stream()
+                .map(car -> {
                             String res = "";
-                            boolean[] tmp = place.getAllPlace().get(index);
-                            if (tmp.length > 0) {
-                                res = "[";
-                                for (int i = 0; i < tmp.length; i++) {
-                                    if (!tmp[i]) {
-                                        if (i != 0) {
-                                            res += ", ";
-                                        }
-                                        res += i;
+                            res = "[";
+                            for (int i = 0; i < car.length; i++) {
+                                if (place.getStatus(i)) {
+                                    if (i != 0) {
+                                        res += ", ";
                                     }
+                                    res += i;
                                 }
                             }
                             return res + "]";

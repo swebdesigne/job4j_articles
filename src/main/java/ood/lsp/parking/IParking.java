@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 public interface IParking {
-    boolean takePlace();
+    boolean takePlace(IVehicle car);
     Optional<String> pairAvailableParkingPlace();
     int getCapacity();
     void pickPlace(int size);

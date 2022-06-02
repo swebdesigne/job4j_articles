@@ -3,15 +3,15 @@ package ood.lsp.parking;
 import java.util.*;
 
 public class Place {
-    private boolean[] pickedTypePlace;
+    private IVehicle[] pickedTypePlace;
     private static final int CARGO_SIZE = 2;
     private static final int PASSENGER_SIZE = 1;
-    private final Map<Integer, boolean[]> place;
+    private final Map<Integer, IVehicle[]> place;
 
     public Place(int capacityCargo, int capacityPassenger) {
         place = Map.of(
-                PASSENGER_SIZE, new boolean[capacityPassenger],
-                CARGO_SIZE, new boolean[capacityCargo]
+                PASSENGER_SIZE, new IVehicle[capacityPassenger],
+                CARGO_SIZE, new IVehicle[capacityCargo]
         );
     }
 
@@ -23,22 +23,21 @@ public class Place {
         return pickedTypePlace.length;
     }
 
-    public boolean[] getPlaceByIndex() {
+    public IVehicle[] getPlaceByIndex() {
         return pickedTypePlace;
     }
 
-    public  Map<Integer, boolean[]> getAllPlace() {
+    public  Map<Integer, IVehicle[]> getAllPlace() {
         return new HashMap<>(place);
     }
 
     public boolean getStatus(int index) {
-        Objects.checkIndex(index, pickedTypePlace.length);
-        return pickedTypePlace[index];
+        Optional<IVehicle> optional = Optional.ofNullable(pickedTypePlace[index]);
+        return optional.isEmpty();
     }
 
-    public void setStatus(int index, boolean status) {
-        Objects.checkIndex(index, pickedTypePlace.length);
-        pickedTypePlace[index] = status;
+    public void setStatus(int index, IVehicle car) {
+        pickedTypePlace[index] = car;
     }
 
     @Override
