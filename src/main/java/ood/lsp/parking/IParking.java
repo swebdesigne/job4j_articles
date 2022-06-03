@@ -6,8 +6,4 @@ import java.util.OptionalInt;
 public interface IParking {
     boolean takePlace(IVehicle car);
     Optional<String> pairAvailableParkingPlace();
-    int getCapacity();
-    void pickPlace(int size);
-    OptionalInt availablePlaceOnParking();
-    OptionalInt occupiedOnParking();
 }

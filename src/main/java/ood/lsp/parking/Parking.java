@@ -1,5 +1,6 @@
 package ood.lsp.parking;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Scanner;
@@ -8,7 +9,6 @@ import java.util.stream.IntStream;
 
 public class Parking implements IParking {
     private final Place place;
-    private int pickedPlace;
 
     public Parking(int capacityCargo, int capacityPassenger) {
         this.place = new Place(capacityCargo, capacityPassenger);
@@ -16,12 +16,14 @@ public class Parking implements IParking {
 
     @Override
     public boolean takePlace(IVehicle car) {
+        int sizeParking = car.sizeParkingPlace();
+        place.pickTypeParking(sizeParking);
         OptionalInt optional = availablePlaceOnParking();
         if (optional.isPresent()) {
-            place.setStatus(optional.getAsInt(), car);
+            place.addCar(optional.getAsInt(), car);
         } else {
-            if (pickedPlace > 1) {
-                pickPlace(1);
+            if (sizeParking > 1) {
+                place.pickTypeParking(1);
                 Optional<String> isExists = pairAvailableParkingPlace();
                 if (isExists.isEmpty()) {
                     return false;
@@ -46,33 +48,32 @@ public class Parking implements IParking {
     public void takePairPlaceForCargoCarInPassengerParking(String pairPlace, IVehicle car) {
         Scanner scanner = new Scanner(pairPlace.replaceAll("[^\\d ]", ""));
         while (scanner.hasNextInt()) {
-            place.setStatus(scanner.nextInt(), car);
+            place.addCar(scanner.nextInt(), car);
         }
         scanner.close();
     }
 
-    @Override
-    public void pickPlace(int size) {
-        pickedPlace = size;
-        place.pickTypeParking(size);
-    }
-
-    @Override
-    public int getCapacity() {
-        return place.getCapacity();
-    }
-
     public String[] allAvailablePlace() {
-        return place.getAllPlace().values().stream()
-                .map(car -> {
-                            String res = "";
-                            res = "[";
-                            for (int i = 0; i < car.length; i++) {
-                                if (place.getStatus(i)) {
-                                    if (i != 0) {
+        return getAllPlaceByPredicate(index -> place.getStatus(index));
+    }
+
+
+    public String[] allOccupiedPlace() {
+        return getAllPlaceByPredicate(index -> !place.getStatus(index));
+    }
+
+    private String[] getAllPlaceByPredicate(Predicate<Integer> predicate) {
+        return place.getAllPlace().keySet().stream()
+                .map(numberParking -> {
+                            place.pickTypeParking(numberParking);
+                            String res;
+                            res = "Parking № " + numberParking + " -> [";
+                            for (int i = 0; i < place.getPlaceByIndex().length; i++) {
+                                if (predicate.test(i)) {
+                                    res += i;
+                                    if (i != place.getPlaceByIndex().length - 1) {
                                         res += ", ";
                                     }
-                                    res += i;
                                 }
                             }
                             return res + "]";
@@ -80,19 +81,32 @@ public class Parking implements IParking {
                 ).toArray(String[]::new);
     }
 
-    @Override
-    public OptionalInt availablePlaceOnParking() {
-        return getPlaceByPredicate(index -> !place.getStatus(index));
-    }
-
-    @Override
-    public OptionalInt occupiedOnParking() {
-        return getPlaceByPredicate(place::getStatus);
+    private OptionalInt availablePlaceOnParking() {
+        return getPlaceByPredicate(index -> place.getStatus(index));
     }
 
     private OptionalInt getPlaceByPredicate(Predicate<Integer> predicate) {
         return IntStream.range(0, place.getCapacity())
                 .filter(predicate::test)
-                .findFirst();
+                .findAny();
+    }
+
+    public static void main(String[] args) {
+        Parking parking = new Parking(3, 4);
+        Arrays.stream(parking.allAvailablePlace()).forEach(System.out::println);
+        PassengerCar car1 = new PassengerCar(1, "123NOUN");
+        parking.takePlace(car1);
+        PassengerCar car2 = new PassengerCar(1, "234NOUN");
+        parking.takePlace(car2);
+        PassengerCar car3 = new PassengerCar(2, "345NOUN");
+        parking.takePlace(car3);
+        PassengerCar car4 = new PassengerCar(2, "456NOUN");
+        parking.takePlace(car4);
+        PassengerCar car5 = new PassengerCar(2, "567NOUN");
+        System.out.println(parking.takePlace(car5));
+        PassengerCar car6 = new PassengerCar(2, "568NOUN");
+        System.out.println(parking.takePlace(car6));
+        Arrays.stream(parking.allAvailablePlace()).forEach(System.out::println);
+        Arrays.stream(parking.allOccupiedPlace()).forEach(System.out::println);
     }
 }

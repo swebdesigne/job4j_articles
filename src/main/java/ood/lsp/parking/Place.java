@@ -36,7 +36,7 @@ public class Place {
         return optional.isEmpty();
     }
 
-    public void setStatus(int index, IVehicle car) {
+    public void addCar(int index, IVehicle car) {
         pickedTypePlace[index] = car;
     }
 
