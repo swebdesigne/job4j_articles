@@ -7,16 +7,11 @@ import java.util.OptionalInt;
 import java.util.function.Predicate;
 
 public class Parking implements IParking {
-    private final static int SIZE_PASSENGER = 1;
-    private final static int SIZE_CARGO = 2;
     private Place typeParking;
-    Map<Integer, Place> placeMap;
+    List<Place> place;
 
-    public Parking(int sizeCargo, int sizePassenger) {
-        placeMap = Map.of(
-                SIZE_PASSENGER, new Place(sizePassenger),
-                SIZE_CARGO, new Place(sizeCargo)
-        );
+    public Parking(int sizePassenger, int sizeCargo) {
+        place = List.of(new Place(sizePassenger), new Place(sizeCargo));
     }
 
     private Place getTypeParking() {
