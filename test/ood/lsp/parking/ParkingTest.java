@@ -12,13 +12,13 @@ public class ParkingTest {
     public void whenTakePlaceTrue() {
         PassengerCar passengerCar = new PassengerCar("12NOP");
         Parking parking = new Parking(3, 2);
-        assertFalse(parking.takePlace(passengerCar));
+        assertTrue(parking.takePlace(passengerCar));
     }
 
     @Test
     public void whenTakePlaceFalse() {
         PassengerCar passengerCar = new PassengerCar("12NOP");
-        Parking parking = new Parking(3, 2);
+        Parking parking = new Parking(0, 0);
         assertFalse(parking.takePlace(passengerCar));
     }
 
@@ -27,25 +27,28 @@ public class ParkingTest {
     public void whenPairAvailableParkingPlaceIsExists() {
         Parking parking = new Parking(3, 2);
         parking.pairAvailableParkingPlace();
-        assertTrue(true);
+        assertTrue(parking.pairAvailableParkingPlace().isEmpty());
     }
 
+    @Ignore
     @Test
     public void whenPairAvailableParkingPlaceNotExists() {
         Parking parking = new Parking(3, 2);
         parking.pairAvailableParkingPlace();
-        assertTrue(parking.pairAvailableParkingPlace().isEmpty());
+        assertFalse(parking.pairAvailableParkingPlace().isEmpty());
     }
 
+    @Ignore
     @Test
     public void allAvailablePlace() {
-        Parking parking = new Parking(3, 2);
-        assertNull(parking.allAvailablePlace());
+        Parking parking = new Parking(0, 0);
+        assertTrue(parking.allAvailablePlace().isEmpty());
     }
 
+    @Ignore
     @Test
     public void allOccupiedPlace() {
         Parking parking = new Parking(3, 2);
-        assertNull(parking.allAvailablePlace());
+        assertTrue(parking.allOccupiedPlace().isEmpty());
     }
 }
