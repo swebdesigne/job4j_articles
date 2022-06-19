@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface IParking {
     boolean takePlace(IVehicle car);
-    Optional<String> pairAvailableParkingPlace();
+    Optional<String> pairAvailableParkingPlace(IVehicle car);
     Map<Integer, List<Integer>> allAvailablePlace();
     Map<Integer, List<Integer>> allOccupiedPlace();
 }
