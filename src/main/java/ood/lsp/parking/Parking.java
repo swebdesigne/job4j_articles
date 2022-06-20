@@ -91,20 +91,21 @@ public class Parking implements IParking {
 
     @Override
     public Map<Integer, List<Integer>> allAvailablePlace() {
-        return getAllPlaceByPredicate(true);
+        return getAllPlaceByPredicate(index -> index.equals(true));
     }
 
     @Override
     public Map<Integer, List<Integer>> allOccupiedPlace() {
-        return getAllPlaceByPredicate(false);
+        return getAllPlaceByPredicate(index -> index.equals(false));
     }
 
-    private Map<Integer, List<Integer>> getAllPlaceByPredicate(boolean condition) {
+    private Map<Integer, List<Integer>> getAllPlaceByPredicate(Predicate<Boolean> predicate) {
         Map<Integer, List<Integer>> parking = new HashMap<>();
         for (int i = 0; i < place.size(); i++) {
             List<Integer> value = new ArrayList<>();
-            for (int j = 0; j < place.get(i).size(); j++) {
-                if (place.get(i).getStatus(j) == condition) {
+            Place tmp = place.get(i);
+            for (int j = 0; j < tmp.size(); j++) {
+                if (predicate.test(tmp.getStatus(j))) {
                     value.add(j);
                     parking.put(i, value);
                 }

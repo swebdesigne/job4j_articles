@@ -24,34 +24,22 @@ public class ParkingTest {
         assertFalse(parking.takePlace(passengerCar));
     }
 
-    @Test
-    public void whenAddCargoCar() {
-        CargoCar car = new CargoCar(2, "12NOP");
-        CargoCar car2 = new CargoCar(2, "12NOP1");
-        CargoCar car3 = new CargoCar(2, "12NOP112");
-        Parking parking = new Parking(5, 6);
-        parking.takePlace(car);
-        parking.takePlace(car2);
-        parking.takePlace(car3);
-        Map<Integer, List<Integer>> expected = new HashMap<>();
-        expected.put(1, List.of(0, 1, 2));
-        assertEquals(parking.allOccupiedPlace(), expected);
-    }
-
     @Test (expected = IllegalArgumentException.class)
     public void whenWrongSizeParkingForCargoCar() {
         CargoCar car = new CargoCar(1, "12NOP");
+        Parking parking = new Parking(2, 1);
+        parking.takePlace(car);
     }
 
     @Test
-    public void whenPairAvailableParkingPlaceIsExists() {
+    public void whenPairAvailableParkingPlaceIsExistsInPassengerParking() {
         Parking parking = new Parking(3, 2);
         CargoCar car = new CargoCar(2, "1222AKK");
         assertTrue(parking.pairAvailableParkingPlace(car).isPresent());
     }
 
     @Test
-    public void whenPairAvailableParkingPlaceNotExists() {
+    public void whenPairAvailableParkingPlaceNotExistsInPassengerParking() {
         Parking parking = new Parking(0, 2);
         CargoCar car = new CargoCar(2, "1222AKK");
         assertTrue(parking.pairAvailableParkingPlace(car).isEmpty());
@@ -64,15 +52,17 @@ public class ParkingTest {
     }
 
     @Test
-    public void allAvailablePlaceWhenHasOccupiedPlace() {
-        Parking parking = new Parking(2, 3);
-        PassengerCar car1 = new PassengerCar("1P");
-        CargoCar car2 = new CargoCar(2,"12P");
-        parking.takePlace(car1);
+    public void allAvailablePlacePlaceWhenHasOccupiedPlace() {
+        Parking parking = new Parking(5, 2);
+        PassengerCar car = new PassengerCar("123NOP");
+        PassengerCar car2 = new PassengerCar("456NOS");
+        CargoCar car3 = new CargoCar(2, "1222AKK");
+        parking.takePlace(car);
         parking.takePlace(car2);
+        parking.takePlace(car3);
         Map<Integer, List<Integer>> expected = new HashMap<>();
-        expected.put(0, List.of(1));
-        expected.put(1, List.of(1, 2));
+        expected.put(0, List.of(2, 3, 4));
+        expected.put(1, List.of(1));
         assertEquals(parking.allAvailablePlace(), expected);
     }
 
