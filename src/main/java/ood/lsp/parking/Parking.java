@@ -45,7 +45,7 @@ public class Parking implements IParking {
     private boolean checkCarExists(IVehicle car) {
         for (int i = 0; i < getTypeParking().size(); i++) {
             Optional<IVehicle> optional = Optional.ofNullable(getTypeParking().getPlace()[i]);
-            if (optional.isPresent() && getTypeParking().getPlace()[i].equals(car)) {
+            if (optional.isPresent() && optional.get().equals(car)) {
                 return true;
             }
         }
