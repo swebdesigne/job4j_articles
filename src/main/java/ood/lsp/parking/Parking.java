@@ -22,7 +22,7 @@ public class Parking implements IParking {
 
     @Override
     public boolean takePlace(IVehicle car) {
-        int sizeParking = car.getSizeParkingPlace();
+        int sizeParking = car.getSize();
         setTypeParking(sizeParking);
         OptionalInt optional = availablePlaceOnParking();
         if (optional.isPresent() && !checkCarExists(car)) {
@@ -57,8 +57,8 @@ public class Parking implements IParking {
         Place passengerParking = place.get(0);
         return IntStream.range(0, passengerParking.size())
                 .filter(index -> index < passengerParking.size() - 1)
-                .filter(index -> checkPairEmptyPlace(index, car.getSizeParkingPlace(), passengerParking))
-                .mapToObj(index -> getEmptyPlace(index, car.getSizeParkingPlace(), passengerParking).toString())
+                .filter(index -> checkPairEmptyPlace(index, car.getSize(), passengerParking))
+                .mapToObj(index -> getEmptyPlace(index, car.getSize(), passengerParking).toString())
                 .findFirst();
     }
 

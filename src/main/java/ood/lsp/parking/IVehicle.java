@@ -1,6 +1,6 @@
 package ood.lsp.parking;
 
 public interface IVehicle {
-    int getSizeParkingPlace();
+    int getSize();
     String getNumber();
 }

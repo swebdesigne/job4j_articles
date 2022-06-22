@@ -13,7 +13,7 @@ public class PassengerCar implements IVehicle {
     }
 
     @Override
-    public int getSizeParkingPlace() {
+    public int getSize() {
         return sizeParkingPlace;
     }
 

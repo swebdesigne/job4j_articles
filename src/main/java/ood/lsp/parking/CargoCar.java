@@ -15,7 +15,7 @@ public class CargoCar implements IVehicle {
      }
 
      @Override
-     public int getSizeParkingPlace() {
+     public int getSize() {
           return sizeParkingPlace;
      }
 
