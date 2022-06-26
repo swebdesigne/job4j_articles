@@ -80,7 +80,7 @@ public class Parking implements IParking {
     private void takePairPlaceForCargoCarInPassengerParking(String pairPlace, IVehicle car) {
         Scanner scanner = new Scanner(pairPlace.replaceAll("[^\\d ]", ""));
         while (scanner.hasNextInt()) {
-            getTypeParking(1).addCar(scanner.nextInt(), car);
+            getTypeParking(PassengerCar.SIZE).addCar(scanner.nextInt(), car);
         }
         scanner.close();
     }
