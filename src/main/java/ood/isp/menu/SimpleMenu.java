@@ -15,7 +15,7 @@ public class SimpleMenu implements Menu {
         if (findItem(parentName).isEmpty()) {
             return rootElements.add(new SimpleMenuItem(parentName, actionDelegate));
         }
-        return false;
+        return true;
     }
 
     @Override
