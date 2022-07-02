@@ -1,6 +1,8 @@
-package ood.isp.menu;
+package ood.isp.menu.action;
 
-public class Exit implements IScheduler {
+import ood.isp.menu.TODOApp;
+
+public class ExitAction implements IAction {
     @Override
     public String title() {
         return "Exit:";

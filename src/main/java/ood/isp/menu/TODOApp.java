@@ -1,17 +1,21 @@
 package ood.isp.menu;
 
-import java.util.HashMap;
+import ood.isp.menu.action.AddMenuAction;
+import ood.isp.menu.action.ExitAction;
+import ood.isp.menu.action.IAction;
+import ood.isp.menu.action.ShowMenuAction;
+
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
 public class TODOApp {
     private final Menu menu = new SimpleMenu();
-    private final Map<String, IScheduler> scheduler;
+    private final Map<String, IAction> scheduler;
     private final Scanner scanner = new Scanner(System.in);
     private final SimpleMenuPrinter printer = new SimpleMenuPrinter();
 
-    public TODOApp(Map<String, IScheduler> scheduler) {
+    public TODOApp(Map<String, IAction> scheduler) {
         this.scheduler = scheduler;
     }
 
@@ -42,7 +46,7 @@ public class TODOApp {
     }
 
     public void showMenu() {
-        for (Map.Entry<String, IScheduler> entry : scheduler.entrySet()) {
+        for (Map.Entry<String, IAction> entry : scheduler.entrySet()) {
             System.out.printf("%s. %s\n", entry.getKey(), entry.getValue().title());
         }
     }
@@ -69,9 +73,9 @@ public class TODOApp {
         new TODOApp(
                 new TreeMap<>(
                         Map.of(
-                                "1", new AddMenu(),
-                                "2", new ShowMenu(),
-                                "3", new Exit()
+                                "1", new AddMenuAction(),
+                                "2", new ShowMenuAction(),
+                                "3", new ExitAction()
                         )
                 )
         ).run();

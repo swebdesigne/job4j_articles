@@ -1,6 +1,10 @@
-package ood.isp.menu;
+package ood.isp.menu.action;
 
-public class AddMenu implements IScheduler {
+import ood.isp.menu.ActionDelegate;
+import ood.isp.menu.Menu;
+import ood.isp.menu.TODOApp;
+
+public class AddMenuAction implements IAction {
     private static final int COUNT_ANSWER = 2;
     private static final ActionDelegate STUB_ACTION = System.out::println;
 

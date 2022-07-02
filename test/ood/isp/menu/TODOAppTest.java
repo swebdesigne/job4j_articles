@@ -1,5 +1,8 @@
 package ood.isp.menu;
 
+import ood.isp.menu.action.AddMenuAction;
+import ood.isp.menu.action.ExitAction;
+import ood.isp.menu.action.ShowMenuAction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,9 +29,9 @@ public class TODOAppTest {
         TODOApp todoApp = new TODOApp(
                 new TreeMap<>(
                         Map.of(
-                                "1", new AddMenu(),
-                                "2", new ShowMenu(),
-                                "3", new Exit()
+                                "1", new AddMenuAction(),
+                                "2", new ShowMenuAction(),
+                                "3", new ExitAction()
                         )
                 )
         );

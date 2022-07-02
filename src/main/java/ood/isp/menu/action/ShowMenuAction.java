@@ -1,6 +1,8 @@
-package ood.isp.menu;
+package ood.isp.menu.action;
 
-public class ShowMenu implements IScheduler {
+import ood.isp.menu.TODOApp;
+
+public class ShowMenuAction implements IAction {
     @Override
     public String title() {
         return "Display menu:";
