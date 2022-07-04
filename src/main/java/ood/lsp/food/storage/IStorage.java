@@ -10,4 +10,5 @@ public interface IStorage {
     boolean accept(Food food);
     Map<String, Set<Food>> get();
     boolean add(Food food);
+    void clear();
 }

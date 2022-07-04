@@ -27,4 +27,9 @@ public class Shop implements IStorage {
         }
         return products.computeIfAbsent(food.getCategory(), value -> new HashSet<>()).add(food);
     }
+
+    @Override
+    public void clear() {
+        products.clear();
+    }
 }

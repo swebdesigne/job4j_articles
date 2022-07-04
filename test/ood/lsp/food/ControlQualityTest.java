@@ -53,6 +53,23 @@ public class ControlQualityTest {
     }
 
     @Test
+    public void whenResortFood() {
+        LocalDate now = LocalDate.now();
+        FinderFood finder = new FinderFood();
+        IStorage shop = new Shop();
+        List<Food> food = List.of(
+                new Ananas("Ananas", 100D, 30, "Ananas", now.minusDays(13), now.plusDays(17)),
+                new Banana("Banana", 75D, 20, "Banana", now.minusDays(13), now.plusDays(17)),
+                new Banana("Banana", 70D, 20, "Banana", now.minusDays(13), now.plusDays(17))
+        );
+        ControlQuality control = new ControlQuality(List.of(shop));
+        control.execute(food);
+        control.resort();
+        List<Food> expected = finder.findAll(shop.get());
+        assertEquals(food, expected);
+    }
+
+    @Test
     public void findByCategory() {
         LocalDate now = LocalDate.now();
         FinderFood finder = new FinderFood();
